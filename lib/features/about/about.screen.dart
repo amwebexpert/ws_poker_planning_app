@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PharmaciesScreen extends StatelessWidget {
-  const PharmaciesScreen({super.key});
+class AboutScreen extends StatelessWidget {
+  const AboutScreen({super.key});
 
   // This widget is the root of your application.
   @override
@@ -20,7 +20,7 @@ class PharmaciesScreen extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Poker Planning'),
+      home: const MyHomePage(title: 'About...'),
     );
   }
 }
