@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ws_poker_planning_app/features/about/about.screen.dart';
 import 'package:ws_poker_planning_app/features/home/home.screen.dart';
+import 'package:ws_poker_planning_app/features/settings/settings.screen.dart';
 
 import 'service.locator.dart';
 import 'services/logger/logger.service.dart';
@@ -16,6 +17,9 @@ Route? onGenerateRoute(RouteSettings settings) {
 
     case '/about':
       return MaterialPageRoute(builder: (_) => const AboutScreen());
+
+    case '/settings':
+      return MaterialPageRoute(builder: (_) => SettingsScreen());
 
     default:
       logger.error('Invalid navigation: ${settings.name}');

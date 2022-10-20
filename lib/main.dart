@@ -3,10 +3,15 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:lottie/lottie.dart';
 import 'package:ws_poker_planning_app/app.error.widget.dart';
+import 'package:ws_poker_planning_app/features/settings/settings.store.dart';
 import 'package:ws_poker_planning_app/services/logger/logger.service.dart';
 import 'package:ws_poker_planning_app/theme/app.theme.dart';
+import 'package:ws_poker_planning_app/utils/animation.utils.dart';
+import 'package:ws_poker_planning_app/utils/randomizer.utils.dart';
 
 import 'route.generator.dart';
 import 'service.locator.dart';
@@ -21,22 +26,61 @@ void main() {
     WidgetsFlutterBinding.ensureInitialized();
     // for this small POC ok since dependencies are very limited, but in real app we would call initServiceLocator inside the Widget + FutureBuilder
     await initServiceLocator();
-    runApp(const MyApp());
+    runApp(const PokerPlanningApp());
   }, (error, stackTrace) {
     LoggerService().error('unhandled error occured in root zone', error: error, stackTrace: stackTrace);
   });
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class PokerPlanningApp extends StatefulWidget {
+  const PokerPlanningApp({Key? key}) : super(key: key);
+
+  @override
+  State<PokerPlanningApp> createState() => _PokerPlanningAppState();
+}
+
+class _PokerPlanningAppState extends State<PokerPlanningApp> {
+  bool _isAppLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => loadData());
+  }
+
+  Future<void> loadData() async {
+    // TODO data loading here
+    await Future.delayed(const Duration(seconds: 2));
+
+    // ensure the widget was not removed from the tree while the asynchronous call was in flight
+    if (mounted) {
+      setState(() => _isAppLoading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Poker Planning',
-      theme: themeDataDark,
-      initialRoute: '/',
-      onGenerateRoute: onGenerateRoute,
-    );
+    if (_isAppLoading) {
+      return Center(
+        child: Lottie.asset(AnimationUtils(RandomizerUtils()).getAnimationPath()),
+      );
+    }
+
+    final SettingsStore settingsStore = serviceLocator.get<SettingsStore>();
+
+    return Observer(builder: (BuildContext context) {
+      return MaterialApp(
+        // debugShowCheckedModeBanner: false, // uncomment to take screen captures without the banner
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: settingsStore.locale,
+        theme: themeDataLight,
+        darkTheme: themeDataDark,
+        themeMode: settingsStore.isDarkTheme ? ThemeMode.dark : ThemeMode.light,
+        initialRoute: '/',
+        onGenerateRoute: onGenerateRoute,
+        onGenerateTitle: (BuildContext context) => AppLocalizations.of(context)!.appTitle,
+      );
+    });
   }
 }
