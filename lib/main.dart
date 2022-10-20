@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 
 import 'package:ws_poker_planning_app/app.error.widget.dart';
 import 'package:ws_poker_planning_app/services/logger/logger.service.dart';
+import 'package:ws_poker_planning_app/theme/app.theme.dart';
 
 import 'route.generator.dart';
 import 'service.locator.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Poker Planning',
-      theme: ThemeData(primarySwatch: Colors.green),
+      theme: themeDataDark,
       initialRoute: '/',
       onGenerateRoute: onGenerateRoute,
     );
