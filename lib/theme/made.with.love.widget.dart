@@ -16,7 +16,7 @@ class MadeWithLoveWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => showAboutDialog(
         context: context,
-        applicationIcon: SvgPicture.asset(appIcon, height: 48, color: Theme.of(context).colorScheme.primary),
+        applicationIcon: SvgPicture.asset(appIcon, height: 48),
         applicationName: localizations.appTitle,
         applicationLegalese: localizations.appSubTitle,
       ),

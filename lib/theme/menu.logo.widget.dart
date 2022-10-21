@@ -21,7 +21,6 @@ class MenuLogo extends StatelessWidget {
             Expanded(
               child: SvgPicture.asset(
                 menuLogo,
-                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             SizedBox(height: spacing(1)),
