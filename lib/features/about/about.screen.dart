@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ws_poker_planning_app/theme/app.bar.title.widget.dart';
-import 'package:ws_poker_planning_app/theme/full.screen.bg.image.widget.dart';
 
 import '/theme/theme.utils.dart';
 import '../../service.locator.dart';

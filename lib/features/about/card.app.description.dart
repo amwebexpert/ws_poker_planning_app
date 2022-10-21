@@ -10,7 +10,6 @@ class CardAppDescriptionWidget extends StatelessWidget {
 
     return Text(
       localizations.appDescription,
-      style: Theme.of(context).textTheme.bodyText1,
     );
   }
 }

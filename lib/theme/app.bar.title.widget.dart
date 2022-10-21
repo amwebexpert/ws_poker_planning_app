@@ -8,6 +8,5 @@ class AppBarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Text(
         title,
-        style: Theme.of(context).textTheme.caption,
       );
 }

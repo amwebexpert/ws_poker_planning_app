@@ -7,9 +7,9 @@
   "appAuthorName": "Author",
   "appAuthorProfile": "Profile",
   "appBuildNumber": "Build #",
-  "appDescription": "Free mobile application originally created to learn the Flutter framework in our spare time.\n\nThe goals for developers is to learn a technology at the same time as providing a fun and scalable educational tool. The source code of this application is available and can be used as a learning base for training sessions in Dart programming with Flutter!",
-  "appSubTitle": "Educational game about words and sentences",
-  "appTitle": "Guess the text",
+  "appDescription": "Free Poker Planning mobile application. Also called Scrum poker, is a consensus-based, gamified technique for estimating, mostly used for timeboxing in Agile principles. In planning poker, members of the group make estimates by playing numbered cards face-down to the table, instead of speaking them aloud.",
+  "appSubTitle": "Agile poker planning native application",
+  "appTitle": "Poker planning",
   "appVersion": "Version",
   "connectivityStatus": "Connectivity",
   "deviceInfo": "About your device…",
@@ -25,6 +25,6 @@
   "prefThemeBrightness": "Theme Brightness",
   "prefThemeBrightnessDark": "Dark theme",
   "prefThemeBrightnessLight": "Light theme",
-  "preferences": "Preferences",
+  "preferences": "Application settings",
   "privacyPolicy": "Privacy policy"
 }

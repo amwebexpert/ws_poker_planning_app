@@ -29,7 +29,6 @@ class MadeWithLoveWidget extends StatelessWidget {
           Text(
             localizations.aboutMadeWithLove,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
       ),

@@ -8,7 +8,6 @@ import '/features/about/card.header.widget.dart';
 import '/features/about/platform.screen.info.table.widget.dart';
 import '/theme/theme.utils.dart';
 import 'app.version.table.widget.dart';
-import 'author.info.table.widget.dart';
 import 'platform.info.table.widget.dart';
 
 class AboutCard extends StatelessWidget {
@@ -53,11 +52,10 @@ class ResponsiveAboutHeaderPanel extends StatelessWidget {
         ResponsiveRowColumnItem(
           rowFlex: 1,
           child: Column(
-            children: [
-              const HeightSpacer(spacingUnitCount: 6),
-              const AppVersionTable(),
-              const HeightSpacer(),
-              AuthorInfoTable()
+            children: const [
+              HeightSpacer(spacingUnitCount: 6),
+              HeightSpacer(),
+              AppVersionTable(),
             ],
           ),
         ),
