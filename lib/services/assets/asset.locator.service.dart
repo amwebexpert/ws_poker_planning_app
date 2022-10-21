@@ -1,8 +1,14 @@
 import 'package:flutter_svg/flutter_svg.dart';
 
 final Set<String> _animationUniqueNames = Set.unmodifiable([
-  '23486-reading-a-book',
-  '35235-reading',
+  '2821-ace-of-cards',
+  '44387-man-working-on-computer',
+  '49662-success-work',
+  '63487-programming-computer',
+  '67515-evaluacion',
+  '75956-app-development-icon',
+  '76888-color-data-analysis',
+  '97525-code-dark',
 ]);
 
 final List<String> _animationNames = List.unmodifiable(_animationUniqueNames.toList(growable: false));
