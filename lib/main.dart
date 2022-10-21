@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:lottie/lottie.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ws_poker_planning_app/app.error.widget.dart';
 import 'package:ws_poker_planning_app/features/settings/settings.store.dart';
 import 'package:ws_poker_planning_app/services/logger/logger.service.dart';
@@ -80,6 +81,15 @@ class _PokerPlanningAppState extends State<PokerPlanningApp> {
         initialRoute: '/',
         onGenerateRoute: onGenerateRoute,
         onGenerateTitle: (BuildContext context) => AppLocalizations.of(context)!.appTitle,
+        builder: (context, widget) => ResponsiveWrapper.builder(
+          ClampingScrollWrapper.builder(context, widget!),
+          backgroundColor: Colors.black,
+          breakpoints: const [
+            ResponsiveBreakpoint.resize(576, name: MOBILE),
+            ResponsiveBreakpoint.resize(768, name: TABLET),
+            ResponsiveBreakpoint.resize(992, name: DESKTOP),
+          ],
+        ),
       );
     });
   }
