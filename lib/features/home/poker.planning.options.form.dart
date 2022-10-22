@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ws_poker_planning_app/features/home/poker.planning.model.dart';
+import 'package:ws_poker_planning_app/theme/height.spacer.widget.dart';
 import 'package:ws_poker_planning_app/theme/theme.utils.dart';
 import 'package:ws_poker_planning_app/theme/width.spacer.widget.dart';
 import '../../../utils/extensions/string.extensions.dart';
@@ -43,8 +44,21 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
     setState(() => _category = value);
   }
 
+  void sessionJoin() {
+    print('join session');
+  }
+
+  void sessionSharing() {
+    print('share session');
+  }
+
+  void sessionCreation() {
+    print('creating session');
+  }
+
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     final isColumnLayout = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
 
     return Form(
@@ -76,6 +90,45 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
                     rowFlex: 1, child: DropDownButtonFieldCategory(value: _category, onChanged: _onCategoryChange)),
               ],
             ),
+            const HeightSpacer(),
+            Wrap(
+              spacing: spacing(2),
+              children: [
+                Tooltip(
+                  message: localizations.newSessionHint,
+                  child: ElevatedButton(
+                    child: Text(localizations.newSession.toUpperCase()),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        sessionCreation();
+                      }
+                    },
+                  ),
+                ),
+                Tooltip(
+                  message: localizations.joinHint,
+                  child: ElevatedButton(
+                    child: Text(localizations.join.toUpperCase()),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        sessionJoin();
+                      }
+                    },
+                  ),
+                ),
+                Tooltip(
+                  message: localizations.shareHint,
+                  child: ElevatedButton(
+                    child: Text(localizations.share.toUpperCase()),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        sessionSharing();
+                      }
+                    },
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),
