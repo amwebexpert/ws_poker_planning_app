@@ -26,5 +26,6 @@
   "prefThemeBrightnessDark": "Thème foncé",
   "prefThemeBrightnessLight": "Thème clair",
   "preferences": "Préférences",
-  "privacyPolicy": "Politique de confidentialité"
+  "privacyPolicy": "Politique de confidentialité",
+  "serverName": "Nom du serveur"
 }

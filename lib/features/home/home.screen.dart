@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ws_poker_planning_app/features/home/poker.planning.options.form.dart';
 import 'package:ws_poker_planning_app/theme/app.menu.widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -12,7 +13,9 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text(localizations.appTitle)),
         drawer: const Drawer(child: AppMenu()),
-        body:  Center(child: Text('HOME...', style: Theme.of(context).textTheme.headline1))
-    );
+        body: SingleChildScrollView(
+            child: Column(
+          children: const [PokerOptionsFormWidget()],
+        )));
   }
 }

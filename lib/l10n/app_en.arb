@@ -26,5 +26,6 @@
   "prefThemeBrightnessDark": "Dark theme",
   "prefThemeBrightnessLight": "Light theme",
   "preferences": "Application settings",
-  "privacyPolicy": "Privacy policy"
+  "privacyPolicy": "Privacy policy",
+  "serverName": "Server name"
 }

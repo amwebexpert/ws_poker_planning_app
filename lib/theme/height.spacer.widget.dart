@@ -7,7 +7,5 @@ class HeightSpacer extends StatelessWidget {
   const HeightSpacer({Key? key, this.spacingUnitCount = 3}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => SizedBox(
-        height: spacing(spacingUnitCount),
-      );
+  Widget build(BuildContext context) => SizedBox(height: spacing(spacingUnitCount));
 }
