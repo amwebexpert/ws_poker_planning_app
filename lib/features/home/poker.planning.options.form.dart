@@ -27,6 +27,9 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
     super.initState();
 
     _txtServerController.text = 'ws-poker-planning.herokuapp.com';
+    _txtTeamNameController.text = 'TeamMeteor';
+    _txtUsernameController.text = 'Andre-OnMobileApp';
+    _txtRoomUUIDController.text = 'e78caaee-a1a2-4298-860d-81d7752226ae';
   }
 
   @override
@@ -58,8 +61,7 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
                   child: TextFormFieldServerName(controller: _txtServerController),
                 ),
                 if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
-                ResponsiveRowColumnItem(
-                    rowFlex: 1, child: DropDownButtonFieldCategory(value: _category, onChanged: _onCategoryChange)),
+                ResponsiveRowColumnItem(rowFlex: 1, child: TextFormFieldTeamName(controller: _txtTeamNameController)),
               ],
             ),
             ResponsiveRowColumn(
@@ -67,7 +69,7 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
               children: [
                 ResponsiveRowColumnItem(
                   rowFlex: 1,
-                  child: TextFormFieldServerName(controller: _txtTeamNameController),
+                  child: TextFormFieldUsername(controller: _txtUsernameController),
                 ),
                 if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
                 ResponsiveRowColumnItem(
@@ -135,13 +137,32 @@ class TextFormFieldTeamName extends StatelessWidget {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
 
     return TextFormField(
-      autofocus: controller.text.isBlank,
       enableSuggestions: false,
       autocorrect: false,
       controller: controller,
       validator: (value) => value.isBlank ? localizations.fieldValidationMandatory : null,
       style: Theme.of(context).textTheme.bodyText1,
-      decoration: InputDecoration(hintText: localizations.serverName),
+      decoration: InputDecoration(hintText: localizations.teamName),
+    );
+  }
+}
+
+class TextFormFieldUsername extends StatelessWidget {
+  final TextEditingController controller;
+
+  const TextFormFieldUsername({Key? key, required this.controller}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
+
+    return TextFormField(
+      enableSuggestions: false,
+      autocorrect: false,
+      controller: controller,
+      validator: (value) => value.isBlank ? localizations.fieldValidationMandatory : null,
+      style: Theme.of(context).textTheme.bodyText1,
+      decoration: InputDecoration(hintText: localizations.username),
     );
   }
 }
