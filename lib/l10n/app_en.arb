@@ -27,5 +27,21 @@
   "prefThemeBrightnessLight": "Light theme",
   "preferences": "Application settings",
   "privacyPolicy": "Privacy policy",
-  "serverName": "Server name"
+  "serverName": "Server name",
+  "teamName": "Team name",
+  "username": "Username",
+  "roomUUID": "Room UUID",
+  "join": "Join",
+  "joinHint": "Enter the room",
+  "new": "New",
+  "newHint": "Register the team and start planning in a new room",
+  "share": "Share",
+  "shareHint": "Share this poker planning session",
+  "storyPointsAverage": "Story points average",
+  "teamMember": "Team member",
+  "points": "Points",
+  "removeUser": "Remove this user from the room",
+  "toggleStoryPointsVisibility": "Toggle story points visibility",
+  "clearAllVotes": "Clear all votes",
+  "pickEstimate": "Estimate the current story points"
 }

@@ -27,5 +27,21 @@
   "prefThemeBrightnessLight": "Thème clair",
   "preferences": "Préférences",
   "privacyPolicy": "Politique de confidentialité",
-  "serverName": "Nom du serveur"
+  "serverName": "Nom du serveur",
+  "teamName": "Nom de l'équipe",
+  "username": "Nom d'utilisageur",
+  "roomUUID": "Identifiant de la session (room)",
+  "join": "Joindre",
+  "joinHint": "Entrer dans la session de poker planning",
+  "new": "Nouveau",
+  "newHint": "Enregistrer la nouvelle session et démarrer le poker planning",
+  "share": "Partager",
+  "shareHint": "Partager la session de poker planning",
+  "storyPointsAverage": "Moyenne des points de la `story`",
+  "teamMember": "Membre",
+  "points": "Points",
+  "removeUser": "Supprimer cet utilisateur de la session de poker planning",
+  "toggleStoryPointsVisibility": "Montrer ou cacher les points",
+  "clearAllVotes": "Supprimer tous les votes",
+  "pickEstimate": "Estimer l'effort de la `story`"
 }

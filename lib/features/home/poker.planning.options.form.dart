@@ -16,6 +16,9 @@ class PokerOptionsFormWidget extends StatefulWidget {
 class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _txtServerController = TextEditingController();
+  final TextEditingController _txtTeamNameController = TextEditingController();
+  final TextEditingController _txtUsernameController = TextEditingController();
+  final TextEditingController _txtRoomUUIDController = TextEditingController();
 
   CardsListingCategoryName _category = CardsListingCategoryName.fibonnacy;
 
@@ -48,12 +51,23 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
         child: Column(
           children: [
             ResponsiveRowColumn(
-              rowMainAxisAlignment: MainAxisAlignment.spaceAround,
               layout: isColumnLayout ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
               children: [
                 ResponsiveRowColumnItem(
                   rowFlex: 1,
                   child: TextFormFieldServerName(controller: _txtServerController),
+                ),
+                if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
+                ResponsiveRowColumnItem(
+                    rowFlex: 1, child: DropDownButtonFieldCategory(value: _category, onChanged: _onCategoryChange)),
+              ],
+            ),
+            ResponsiveRowColumn(
+              layout: isColumnLayout ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
+              children: [
+                ResponsiveRowColumnItem(
+                  rowFlex: 1,
+                  child: TextFormFieldServerName(controller: _txtTeamNameController),
                 ),
                 if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
                 ResponsiveRowColumnItem(
@@ -94,6 +108,27 @@ class TextFormFieldServerName extends StatelessWidget {
   final TextEditingController controller;
 
   const TextFormFieldServerName({Key? key, required this.controller}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
+
+    return TextFormField(
+      autofocus: controller.text.isBlank,
+      enableSuggestions: false,
+      autocorrect: false,
+      controller: controller,
+      validator: (value) => value.isBlank ? localizations.fieldValidationMandatory : null,
+      style: Theme.of(context).textTheme.bodyText1,
+      decoration: InputDecoration(hintText: localizations.serverName),
+    );
+  }
+}
+
+class TextFormFieldTeamName extends StatelessWidget {
+  final TextEditingController controller;
+
+  const TextFormFieldTeamName({Key? key, required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
