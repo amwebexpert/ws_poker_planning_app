@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/scheduler.dart';
 import 'package:mobx/mobx.dart';
 import 'package:universal_io/io.dart';
-import 'package:ws_poker_planning_app/services/file/storage/shared.preferences.enum.dart';
-import 'package:ws_poker_planning_app/services/file/storage/shared.preferences.services.dart';
+import 'package:ws_poker_planning_app/services/storage/shared.preferences.enum.dart';
+import 'package:ws_poker_planning_app/services/storage/shared.preferences.services.dart';
 
 import '/service.locator.dart';
 import '/utils/language.utils.dart';

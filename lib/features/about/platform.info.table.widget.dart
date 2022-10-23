@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ws_poker_planning_app/services/file/device/device.info.service.dart';
+import 'package:ws_poker_planning_app/services/device/device.info.service.dart';
 
 import '/service.locator.dart';
 import '/theme/theme.utils.dart';
