@@ -72,6 +72,7 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
       _txtTeamNameController.text = sessionInfo.teamName;
       _txtUsernameController.text = sessionInfo.username;
       _txtRoomUUIDController.text = sessionInfo.roomUUID;
+      _votingCategory = sessionInfo.votingCategory;
 
       return Form(
         key: _formKey,

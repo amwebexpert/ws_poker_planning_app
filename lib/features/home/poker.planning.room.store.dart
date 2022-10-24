@@ -25,10 +25,12 @@ abstract class _PokerPlanningRoomStoreBase with Store {
     final defaultValue = jsonEncode(PokerPlanningSessionInfo().toJson());
     final jsonStoredValue =
         _preferences.getString(SharedPreferenceKey.lastPokerPlanningRoom.name, defaultValue: defaultValue);
-    final map = jsonDecode(jsonStoredValue);
-    pokerPlanningSessionInfo = PokerPlanningSessionInfo.fromJson(map);
-    pokerPlanningSessionInfo =
-        PokerPlanningSessionInfo.fromJson(PokerPlanningSessionInfo.defaultLocalhost); // TODO For testing
+    pokerPlanningSessionInfo = PokerPlanningSessionInfo.fromJson(jsonDecode(jsonStoredValue));
+
+    // TODO For testing
+    if (pokerPlanningSessionInfo.hostname == '') {
+      pokerPlanningSessionInfo = PokerPlanningSessionInfo.fromJson(PokerPlanningSessionInfo.defaultLocalhost);
+    }
   }
 
   @action
