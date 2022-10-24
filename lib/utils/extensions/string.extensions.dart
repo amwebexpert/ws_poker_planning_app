@@ -18,4 +18,8 @@ extension StringUtils on String? {
   bool get isBlank => this == null || this!.isEmpty || this!.trim().isEmpty;
 
   bool get isNotBlank => !isBlank;
+
+  /// Convert a litteral value into it's enum item
+  /// Example: final Language language = Language.en.toString().toEnum(Language.values);
+  T toEnum<T extends Enum>(List<T> enumValues) => enumValues.firstWhere((enumVal) => enumVal.name == this);
 }

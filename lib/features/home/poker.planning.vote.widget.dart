@@ -15,21 +15,12 @@ class VoteWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     const size = Size.square(48);
     final text = Text(value, style: Theme.of(context).textTheme.headline6);
-    final EdgeInsetsGeometry edgeInsets = EdgeInsets.all(spacing(0.5));
 
     return Padding(
-      padding: edgeInsets,
+      padding: EdgeInsets.all(spacing(0.5)),
       child: isSelected
-          ? ElevatedButton(
-              style: ElevatedButton.styleFrom(minimumSize: size),
-              onPressed: onPressed,
-              child: text,
-            )
-          : OutlinedButton(
-              style: OutlinedButton.styleFrom(minimumSize: size),
-              onPressed: onPressed,
-              child: text,
-            ),
+          ? ElevatedButton(style: ElevatedButton.styleFrom(minimumSize: size), onPressed: onPressed, child: text)
+          : OutlinedButton(style: OutlinedButton.styleFrom(minimumSize: size), onPressed: onPressed, child: text),
     );
   }
 }

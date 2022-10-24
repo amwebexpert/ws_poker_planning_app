@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:ws_poker_planning_app/features/home/poker.planning.room.store.dart';
 import 'package:ws_poker_planning_app/features/home/service/poker.planning.service.dart';
 import 'package:ws_poker_planning_app/features/settings/settings.store.dart';
 import 'package:ws_poker_planning_app/services/assets/asset.locator.service.dart';
@@ -21,6 +22,7 @@ Future<GetIt> initServiceLocator() async {
     ..registerSingleton<SharedPreferencesService>(await SharedPreferencesService().init())
     ..registerLazySingleton<DeviceInfoService>(() => DeviceInfoService())
     ..registerLazySingleton<SettingsStore>(() => SettingsStore())
+    ..registerLazySingleton<PokerPlanningRoomStore>(() => PokerPlanningRoomStore())
     ..registerLazySingleton<RandomizerUtils>(() => RandomizerUtils())
     ..registerLazySingleton<AssetLocatorService>(() => AssetLocatorService())
     ..registerLazySingleton<AnimationUtils>(() => AnimationUtils(serviceLocator.get<RandomizerUtils>()))

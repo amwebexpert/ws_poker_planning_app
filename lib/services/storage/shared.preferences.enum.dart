@@ -1,8 +1,7 @@
 enum SharedPreferenceKey {
   appLanguage,
   appIsThemeDark,
-  lastSelectedCategory,
-  lastSelectedCategoriesListType,
+  lastPokerPlanningRoom,
 }
 
 List<String> getAllSharedPreferenceKeys() => SharedPreferenceKey.values.map((e) => e.name).toList();
