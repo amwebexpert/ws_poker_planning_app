@@ -27,10 +27,10 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
   void initState() {
     super.initState();
 
-    _txtServerController.text = 'ws-poker-planning.herokuapp.com';
+    _txtServerController.text = 'localhost:8080'; //'ws-poker-planning.herokuapp.com';
     _txtTeamNameController.text = 'TeamMeteor';
     _txtUsernameController.text = 'Andre-OnMobileApp';
-    _txtRoomUUIDController.text = 'e78caaee-a1a2-4298-860d-81d7752226ae';
+    _txtRoomUUIDController.text = '353ab54f-a943-4282-a669-efbfd14a5e66'; // 'e78caaee-a1a2-4298-860d-81d7752226ae';
   }
 
   @override
@@ -86,8 +86,7 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
                   child: TextFormFieldUsername(controller: _txtUsernameController),
                 ),
                 if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
-                ResponsiveRowColumnItem(
-                    rowFlex: 1, child: DropDownButtonFieldCategory(value: _category, onChanged: _onCategoryChange)),
+                ResponsiveRowColumnItem(rowFlex: 1, child: DropDownButtonFieldCategory(value: _category, onChanged: _onCategoryChange)),
               ],
             ),
             const HeightSpacer(),

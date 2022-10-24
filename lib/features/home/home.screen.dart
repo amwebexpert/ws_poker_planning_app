@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ws_poker_planning_app/features/home/poker.planning.options.form.dart';
+import 'package:ws_poker_planning_app/features/home/poker.planning.vote.panel.widget.dart';
 import 'package:ws_poker_planning_app/features/home/service/poker.planning.service.dart';
 import 'package:ws_poker_planning_app/service.locator.dart';
 import 'package:ws_poker_planning_app/services/logger/logger.service.dart';
@@ -25,7 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     webSocketService
-      ..startSession(hostname: 'ws-poker-planning.herokuapp.com', roomUUID: 'e78caaee-a1a2-4298-860d-81d7752226ae', isSecure: true)
+      // ..startSession(hostname: 'ws-poker-planning.herokuapp.com', roomUUID: 'e78caaee-a1a2-4298-860d-81d7752226ae', isSecure: true)
+      ..startSession(hostname: 'localhost:8080', roomUUID: '353ab54f-a943-4282-a669-efbfd14a5e66', isSecure: false)
       ..sendMessage();
 
     webSocketService.stream.listen((session) {
@@ -42,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
         drawer: const Drawer(child: AppMenu()),
         body: SingleChildScrollView(
             child: Column(
-          children: const [PokerOptionsFormWidget()],
+          children: const [PokerOptionsFormWidget(), VotePanelWidget()],
         )));
   }
 }
