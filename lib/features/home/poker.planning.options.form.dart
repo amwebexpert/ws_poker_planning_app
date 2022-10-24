@@ -38,16 +38,6 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
       votingCategory: _votingCategory);
 
   @override
-  void initState() {
-    super.initState();
-
-    _txtServerController.text = 'localhost:8080'; //'ws-poker-planning.herokuapp.com';
-    _txtTeamNameController.text = 'TeamMeteor';
-    _txtUsernameController.text = 'Andre-OnMobileApp';
-    _txtRoomUUIDController.text = '353ab54f-a943-4282-a669-efbfd14a5e66'; // 'e78caaee-a1a2-4298-860d-81d7752226ae';
-  }
-
-  @override
   void dispose() {
     _txtServerController.dispose();
 
