@@ -6,8 +6,9 @@ import 'package:ws_poker_planning_app/theme/theme.utils.dart';
 class VoteWidget extends StatelessWidget {
   final String value;
   final bool isSelected;
+  final bool isEnabled;
 
-  const VoteWidget({super.key, required this.value, required this.isSelected});
+  const VoteWidget({super.key, required this.value, required this.isSelected, required this.isEnabled});
 
   void onPressed() {
     serviceLocator.get<PokerPlanningRoomStore>().estimateTask(value);
@@ -17,12 +18,13 @@ class VoteWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     const size = Size.square(48);
     final text = Text(value, style: Theme.of(context).textTheme.headline6);
+    final onPressHandler = isEnabled ? onPressed : null;
 
     return Padding(
       padding: EdgeInsets.all(spacing(0.5)),
       child: isSelected
-          ? ElevatedButton(style: ElevatedButton.styleFrom(minimumSize: size), onPressed: onPressed, child: text)
-          : OutlinedButton(style: OutlinedButton.styleFrom(minimumSize: size), onPressed: onPressed, child: text),
+          ? ElevatedButton(style: ElevatedButton.styleFrom(minimumSize: size), onPressed: onPressHandler, child: text)
+          : OutlinedButton(style: OutlinedButton.styleFrom(minimumSize: size), onPressed: onPressHandler, child: text),
     );
   }
 }

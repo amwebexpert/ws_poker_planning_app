@@ -15,10 +15,13 @@ class VotesWidget extends StatelessWidget {
     return Observer(builder: (context) {
       final VotingCardsCategory votingCategory = store.pokerPlanningSessionInfo.votingCategory;
       final List<String> values = cardsListingCategories[votingCategory]!.values;
+      final isEnabled = store.pokerPlanningSessionInfo.isPopulated;
 
       return Wrap(
           alignment: WrapAlignment.center,
-          children: values.map((value) => VoteWidget(value: value, isSelected: value == store.estimate)).toList());
+          children: values
+              .map((value) => VoteWidget(value: value, isSelected: value == store.estimate, isEnabled: isEnabled))
+              .toList());
     });
   }
 }
