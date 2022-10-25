@@ -59,22 +59,6 @@ class PokerPlanningSessionInfo {
         'username': username,
         'votingCategory': votingCategory.name
       };
-
-  static final Map<String, dynamic> defaultLocalhost = {
-    'hostname': defaultLocalHostname,
-    'roomUUID': 'default',
-    'teamName': 'Localhost-FuegoTeam',
-    'username': 'Flutter-LOCALHOST',
-    'votingCategory': 'fibonnacy',
-  };
-
-  static final Map<String, dynamic> defaultHeroku = {
-    'hostname': 'ws-poker-planning.herokuapp.com',
-    'roomUUID': 'default',
-    'teamName': 'Default-Team',
-    'username': 'Andre-Flutter-App',
-    'votingCategory': 'fibonnacy',
-  };
 }
 
 class CardsListingCategory {

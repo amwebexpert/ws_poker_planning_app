@@ -26,11 +26,6 @@ abstract class _PokerPlanningRoomStoreBase with Store {
     final jsonStoredValue =
         _preferences.getString(SharedPreferenceKey.lastPokerPlanningRoom.name, defaultValue: defaultValue);
     pokerPlanningSessionInfo = PokerPlanningSessionInfo.fromJson(jsonDecode(jsonStoredValue));
-
-    // TODO For testing
-    if (pokerPlanningSessionInfo.hostname == '') {
-      pokerPlanningSessionInfo = PokerPlanningSessionInfo.fromJson(PokerPlanningSessionInfo.defaultLocalhost);
-    }
   }
 
   @action

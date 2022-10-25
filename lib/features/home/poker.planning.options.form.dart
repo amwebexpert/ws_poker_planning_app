@@ -25,10 +25,9 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
   final TextEditingController _txtHostnameController = TextEditingController();
   final TextEditingController _txtTeamNameController = TextEditingController();
   final TextEditingController _txtUsernameController = TextEditingController();
-  final TextEditingController _txtRoomUUIDController = TextEditingController();
 
   VotingCardsCategory _votingCategory = VotingCardsCategory.fibonnacy;
-  bool isFormValid = false;
+  bool isFormPopulated = false;
 
   @override
   void initState() {
@@ -36,45 +35,43 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
 
     _txtHostnameController
       ..text = sessionInfo.hostname
-      ..addListener(updateFormValidFlag);
-
-    _txtRoomUUIDController
-      ..text = sessionInfo.roomUUID
-      ..addListener(updateFormValidFlag);
+      ..addListener(updateFormPopulatedFlag);
 
     _txtTeamNameController
       ..text = sessionInfo.teamName
-      ..addListener(updateFormValidFlag);
+      ..addListener(updateFormPopulatedFlag);
 
     _txtUsernameController
       ..text = sessionInfo.username
-      ..addListener(updateFormValidFlag);
+      ..addListener(updateFormPopulatedFlag);
 
     _votingCategory = sessionInfo.votingCategory;
+
+    updateFormPopulatedFlag();
 
     super.initState();
   }
 
-  void updateFormValidFlag() {
+  void updateFormPopulatedFlag() {
     setState(() {
-      isFormValid = _txtHostnameController.text.isNotBlank &&
-          _txtRoomUUIDController.text.isNotBlank &&
+      isFormPopulated = _txtHostnameController.text.isNotBlank &&
           _txtTeamNameController.text.isNotBlank &&
           _txtUsernameController.text.isNotBlank;
     });
+
+    store.updatePokerPlanningSessionInfo(info);
   }
 
   PokerPlanningSessionInfo get info => PokerPlanningSessionInfo(
-      hostname: _txtHostnameController.text,
+      hostname: _txtHostnameController.text.trim(),
       roomUUID: 'default',
-      teamName: _txtTeamNameController.text,
-      username: _txtUsernameController.text,
+      teamName: _txtTeamNameController.text.trim(),
+      username: _txtUsernameController.text.trim(),
       votingCategory: _votingCategory);
 
   @override
   void dispose() {
     _txtHostnameController.dispose();
-    _txtRoomUUIDController.dispose();
     _txtTeamNameController.dispose();
     _txtUsernameController.dispose();
 
@@ -146,21 +143,21 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
                 Tooltip(
                   message: localizations.newSessionHint,
                   child: ElevatedButton(
-                    onPressed: isFormValid ? sessionCreation : null,
+                    onPressed: isFormPopulated ? sessionCreation : null,
                     child: Text(localizations.newSession.toUpperCase()),
                   ),
                 ),
                 Tooltip(
                   message: localizations.joinHint,
                   child: ElevatedButton(
-                    onPressed: sessionJoin,
+                    onPressed: isFormPopulated ? sessionJoin : null,
                     child: Text(localizations.join.toUpperCase()),
                   ),
                 ),
                 Tooltip(
                   message: localizations.shareHint,
                   child: ElevatedButton(
-                    onPressed: sessionSharing,
+                    onPressed: isFormPopulated ? sessionSharing : null,
                     child: Text(localizations.share.toUpperCase()),
                   ),
                 ),
