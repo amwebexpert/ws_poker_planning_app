@@ -35,13 +35,10 @@ class PokerPlanningService {
     return Uri.parse(uri);
   }
 
-  void sendMessage() {
-    String jsonData = '{"type":"vote","payload":{"username":"Andre-Flutter-Guy"}}';
-    webSocketService.sendData(jsonData);
-  }
-
-  void estimate(String? value) {
-    String jsonData = '{"type":"vote","payload":{"username":"Andre-Flutter-$value"}}';
+  void estimate(String username, String? estimate) {
+    final UserEstimate userEstimate = UserEstimate(username: username, estimate: estimate, estimatedAtISO8601: '');
+    final UserMessage<UserEstimate> userMessage = UserMessage(type: MessageType.vote, payload: userEstimate);
+    String jsonData = jsonEncode(userMessage.toJson());
     webSocketService.sendData(jsonData);
   }
 }

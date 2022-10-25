@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:mobx/mobx.dart';
 import 'package:ws_poker_planning_app/features/home/poker.planning.model.dart';
 import 'package:ws_poker_planning_app/features/home/service/poker.planning.service.dart';
+import 'package:ws_poker_planning_app/features/home/service/poker.planning.service.model.dart';
 import 'package:ws_poker_planning_app/service.locator.dart';
 import 'package:ws_poker_planning_app/services/logger/logger.service.dart';
 import 'package:ws_poker_planning_app/services/storage/shared.preferences.enum.dart';
@@ -18,7 +19,7 @@ class PokerPlanningRoomStore extends _PokerPlanningRoomStoreBase with _$PokerPla
 abstract class _PokerPlanningRoomStoreBase with Store {
   final LoggerService _logger = serviceLocator.get();
   final SharedPreferencesService _preferences = serviceLocator.get();
-  final PokerPlanningService webSocketService = serviceLocator.get();
+  final PokerPlanningService pokerService = serviceLocator.get();
 
   @observable
   String? estimate = '1';
@@ -26,27 +27,35 @@ abstract class _PokerPlanningRoomStoreBase with Store {
   @observable
   PokerPlanningSessionInfo pokerPlanningSessionInfo = PokerPlanningSessionInfo();
 
+  @observable
+  PokerPlanningSession? session;
+
   _PokerPlanningRoomStoreBase() {
     final defaultValue = jsonEncode(PokerPlanningSessionInfo().toJson());
     final json = _preferences.getString(SharedPreferenceKey.lastPokerPlanningRoom.name, defaultValue: defaultValue);
     pokerPlanningSessionInfo = PokerPlanningSessionInfo.fromJson(jsonDecode(json));
   }
 
+  @computed
+  bool get isMemberOfRoom =>
+      pokerPlanningSessionInfo.isPopulated && session != null && session!.hasMember(pokerPlanningSessionInfo.username);
+
   @action
   void estimateTask(String? newEstimate) {
     estimate = newEstimate;
-    webSocketService.estimate(newEstimate);
+    pokerService.estimate(pokerPlanningSessionInfo.username, newEstimate);
   }
 
   @action
   void join() {
-    webSocketService.startSession(
+    pokerService.startSession(
         hostname: pokerPlanningSessionInfo.hostname,
         roomUUID: pokerPlanningSessionInfo.roomUUID,
         isSecure: pokerPlanningSessionInfo.isSecure);
 
-    webSocketService.stream.listen((session) {
-      _logger.info('[PokerPlanningRoomStore] receiving: ${session.toJson()}');
+    pokerService.stream.listen((updatedSessionInfo) {
+      _logger.info('[PokerPlanningRoomStore] receiving: ${updatedSessionInfo.toJson()}');
+      session = updatedSessionInfo;
     });
   }
 

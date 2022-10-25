@@ -9,6 +9,14 @@ part of 'poker.planning.room.store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$PokerPlanningRoomStore on _PokerPlanningRoomStoreBase, Store {
+  Computed<bool>? _$isMemberOfRoomComputed;
+
+  @override
+  bool get isMemberOfRoom =>
+      (_$isMemberOfRoomComputed ??= Computed<bool>(() => super.isMemberOfRoom,
+              name: '_PokerPlanningRoomStoreBase.isMemberOfRoom'))
+          .value;
+
   late final _$estimateAtom =
       Atom(name: '_PokerPlanningRoomStoreBase.estimate', context: context);
 
@@ -43,6 +51,22 @@ mixin _$PokerPlanningRoomStore on _PokerPlanningRoomStoreBase, Store {
     });
   }
 
+  late final _$sessionAtom =
+      Atom(name: '_PokerPlanningRoomStoreBase.session', context: context);
+
+  @override
+  PokerPlanningSession? get session {
+    _$sessionAtom.reportRead();
+    return super.session;
+  }
+
+  @override
+  set session(PokerPlanningSession? value) {
+    _$sessionAtom.reportWrite(value, super.session, () {
+      super.session = value;
+    });
+  }
+
   late final _$_PokerPlanningRoomStoreBaseActionController =
       ActionController(name: '_PokerPlanningRoomStoreBase', context: context);
 
@@ -52,6 +76,17 @@ mixin _$PokerPlanningRoomStore on _PokerPlanningRoomStoreBase, Store {
         .startAction(name: '_PokerPlanningRoomStoreBase.estimateTask');
     try {
       return super.estimateTask(newEstimate);
+    } finally {
+      _$_PokerPlanningRoomStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void join() {
+    final _$actionInfo = _$_PokerPlanningRoomStoreBaseActionController
+        .startAction(name: '_PokerPlanningRoomStoreBase.join');
+    try {
+      return super.join();
     } finally {
       _$_PokerPlanningRoomStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -73,7 +108,9 @@ mixin _$PokerPlanningRoomStore on _PokerPlanningRoomStoreBase, Store {
   String toString() {
     return '''
 estimate: ${estimate},
-pokerPlanningSessionInfo: ${pokerPlanningSessionInfo}
+pokerPlanningSessionInfo: ${pokerPlanningSessionInfo},
+session: ${session},
+isMemberOfRoom: ${isMemberOfRoom}
     ''';
   }
 }

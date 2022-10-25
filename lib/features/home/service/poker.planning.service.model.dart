@@ -9,6 +9,8 @@ class PokerPlanningSession {
   late final String lastUpdateISO8601;
   late final List<UserEstimate> estimates;
 
+  bool hasMember(String username) => estimates.any((estimate) => estimate.username == username);
+
   PokerPlanningSession.fromJson(Map<String, dynamic> json) {
     version = json['version'];
     lastUpdateISO8601 = json['lastUpdateISO8601'];
@@ -23,7 +25,7 @@ class PokerPlanningSession {
       };
 }
 
-class UserEstimate {
+class UserEstimate extends SerializableAsJson {
   UserEstimate({required this.username, this.estimate, this.estimatedAtISO8601});
 
   String username;
@@ -35,6 +37,7 @@ class UserEstimate {
         estimate = json['estimate'],
         estimatedAtISO8601 = json['estimatedAtISO8601'];
 
+  @override
   Map<String, dynamic> toJson() => {
         'username': username,
         'estimate': estimate,
@@ -55,7 +58,7 @@ class UserMessage<TPayload extends SerializableAsJson> {
   TPayload? payload;
 
   Map<String, dynamic> toJson() => {
-        'type': type,
+        'type': type.name,
         'payload': payload?.toJson(),
       };
 }

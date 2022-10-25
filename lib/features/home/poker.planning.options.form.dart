@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ws_poker_planning_app/features/home/poker.planning.model.dart';
 import 'package:ws_poker_planning_app/features/home/poker.planning.room.store.dart';
@@ -132,32 +133,34 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
               ],
             ),
             const HeightSpacer(),
-            Wrap(
-              spacing: spacing(2),
-              children: [
-                Tooltip(
-                  message: localizations.newSessionHint,
-                  child: ElevatedButton(
-                    onPressed: isFormPopulated ? sessionCreation : null,
-                    child: Text(localizations.newSession.toUpperCase()),
+            Observer(builder: (context) {
+              return Wrap(
+                spacing: spacing(2),
+                children: [
+                  Tooltip(
+                    message: localizations.newSessionHint,
+                    child: ElevatedButton(
+                      onPressed: isFormPopulated ? sessionCreation : null,
+                      child: Text(localizations.newSession.toUpperCase()),
+                    ),
                   ),
-                ),
-                Tooltip(
-                  message: localizations.joinHint,
-                  child: ElevatedButton(
-                    onPressed: isFormPopulated ? sessionJoin : null,
-                    child: Text(localizations.join.toUpperCase()),
+                  Tooltip(
+                    message: localizations.joinHint,
+                    child: ElevatedButton(
+                      onPressed: isFormPopulated && !store.isMemberOfRoom ? sessionJoin : null,
+                      child: Text(localizations.join.toUpperCase()),
+                    ),
                   ),
-                ),
-                Tooltip(
-                  message: localizations.shareHint,
-                  child: ElevatedButton(
-                    onPressed: isFormPopulated ? sessionSharing : null,
-                    child: Text(localizations.share.toUpperCase()),
+                  Tooltip(
+                    message: localizations.shareHint,
+                    child: ElevatedButton(
+                      onPressed: isFormPopulated ? sessionSharing : null,
+                      child: Text(localizations.share.toUpperCase()),
+                    ),
                   ),
-                ),
-              ],
-            )
+                ],
+              );
+            })
           ],
         ),
       ),
