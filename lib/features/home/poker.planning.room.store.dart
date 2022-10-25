@@ -40,6 +40,11 @@ abstract class _PokerPlanningRoomStoreBase with Store {
     // deep clone to make sure the reference is changing
     pokerPlanningSessionInfo = PokerPlanningSessionInfo.fromJson(info.toJson());
 
+    final CardsListingCategory cards = cardsListingCategories[pokerPlanningSessionInfo.votingCategory]!;
+    if (!cards.values.contains(estimate)) {
+      estimate = null;
+    }
+
     final String key = SharedPreferenceKey.lastPokerPlanningRoom.name;
     final String json = jsonEncode(pokerPlanningSessionInfo);
     _preferences.setString(key, json).onError((e, stackTrace) {

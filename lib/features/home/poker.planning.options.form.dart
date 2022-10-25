@@ -53,12 +53,7 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
   }
 
   void updateFormPopulatedFlag() {
-    setState(() {
-      isFormPopulated = _txtHostnameController.text.isNotBlank &&
-          _txtTeamNameController.text.isNotBlank &&
-          _txtUsernameController.text.isNotBlank;
-    });
-
+    setState(() => isFormPopulated = info.isPopulated);
     store.updatePokerPlanningSessionInfo(info);
   }
 

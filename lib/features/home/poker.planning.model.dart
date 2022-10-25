@@ -36,6 +36,7 @@ class PokerPlanningSessionInfo {
   final VotingCardsCategory votingCategory;
 
   bool get isSecure => hostname != defaultLocalHostname;
+  bool get isPopulated => [hostname, roomUUID, teamName, username].every((element) => element.isNotBlank);
 
   PokerPlanningSessionInfo(
       {this.hostname = '',
