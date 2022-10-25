@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ws_poker_planning_app/features/home/poker.planning.model.dart';
 import 'package:ws_poker_planning_app/features/home/poker.planning.room.store.dart';
@@ -9,7 +8,7 @@ import 'package:ws_poker_planning_app/services/logger/logger.service.dart';
 import 'package:ws_poker_planning_app/theme/height.spacer.widget.dart';
 import 'package:ws_poker_planning_app/theme/theme.utils.dart';
 import 'package:ws_poker_planning_app/theme/width.spacer.widget.dart';
-import '../../../utils/extensions/string.extensions.dart';
+import 'package:ws_poker_planning_app/utils/extensions/string.extensions.dart';
 
 class PokerOptionsFormWidget extends StatefulWidget {
   const PokerOptionsFormWidget({super.key});
@@ -23,15 +22,50 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
   final PokerPlanningRoomStore store = serviceLocator.get();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _txtServerController = TextEditingController();
+  final TextEditingController _txtHostnameController = TextEditingController();
   final TextEditingController _txtTeamNameController = TextEditingController();
   final TextEditingController _txtUsernameController = TextEditingController();
   final TextEditingController _txtRoomUUIDController = TextEditingController();
 
   VotingCardsCategory _votingCategory = VotingCardsCategory.fibonnacy;
+  bool isFormValid = false;
+
+  @override
+  void initState() {
+    final sessionInfo = store.pokerPlanningSessionInfo;
+
+    _txtHostnameController
+      ..text = sessionInfo.hostname
+      ..addListener(updateFormValidFlag);
+
+    _txtRoomUUIDController
+      ..text = sessionInfo.roomUUID
+      ..addListener(updateFormValidFlag);
+
+    _txtTeamNameController
+      ..text = sessionInfo.teamName
+      ..addListener(updateFormValidFlag);
+
+    _txtUsernameController
+      ..text = sessionInfo.username
+      ..addListener(updateFormValidFlag);
+
+    _votingCategory = sessionInfo.votingCategory;
+
+    super.initState();
+  }
+
+  void updateFormValidFlag() {
+    setState(() {
+      isFormValid = _txtHostnameController.text.isNotBlank &&
+          _txtRoomUUIDController.text.isNotBlank &&
+          _txtTeamNameController.text.isNotBlank &&
+          _txtUsernameController.text.isNotBlank;
+    });
+  }
 
   PokerPlanningSessionInfo get info => PokerPlanningSessionInfo(
-      hostname: _txtServerController.text,
+      hostname: _txtHostnameController.text,
       roomUUID: 'default',
       teamName: _txtTeamNameController.text,
       username: _txtUsernameController.text,
@@ -39,7 +73,10 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
 
   @override
   void dispose() {
-    _txtServerController.dispose();
+    _txtHostnameController.dispose();
+    _txtRoomUUIDController.dispose();
+    _txtTeamNameController.dispose();
+    _txtUsernameController.dispose();
 
     super.dispose();
   }
@@ -50,15 +87,21 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
   }
 
   void sessionJoin() {
-    print('join session');
+    if (_formKey.currentState!.validate()) {
+      print('join session');
+    }
   }
 
   void sessionSharing() {
-    print('share session');
+    if (_formKey.currentState!.validate()) {
+      print('share session');
+    }
   }
 
   void sessionCreation() {
-    print('creating session');
+    if (_formKey.currentState!.validate()) {
+      print('creating session');
+    }
   }
 
   @override
@@ -66,88 +109,67 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
     final isColumnLayout = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
 
-    return Observer(builder: (context) {
-      final sessionInfo = store.pokerPlanningSessionInfo;
-      _txtServerController.text = sessionInfo.hostname;
-      _txtTeamNameController.text = sessionInfo.teamName;
-      _txtUsernameController.text = sessionInfo.username;
-      _txtRoomUUIDController.text = sessionInfo.roomUUID;
-      _votingCategory = sessionInfo.votingCategory;
-
-      return Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(spacing(2)),
-          child: Column(
-            children: [
-              ResponsiveRowColumn(
-                layout: isColumnLayout ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
-                children: [
-                  ResponsiveRowColumnItem(
+    return Form(
+      key: _formKey,
+      child: SingleChildScrollView(
+        padding: EdgeInsets.all(spacing(2)),
+        child: Column(
+          children: [
+            ResponsiveRowColumn(
+              layout: isColumnLayout ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
+              children: [
+                ResponsiveRowColumnItem(
+                  rowFlex: 1,
+                  child: TextFormFieldServerName(controller: _txtHostnameController),
+                ),
+                if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
+                ResponsiveRowColumnItem(rowFlex: 1, child: TextFormFieldTeamName(controller: _txtTeamNameController)),
+              ],
+            ),
+            ResponsiveRowColumn(
+              layout: isColumnLayout ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
+              children: [
+                ResponsiveRowColumnItem(
+                  rowFlex: 1,
+                  child: TextFormFieldUsername(controller: _txtUsernameController),
+                ),
+                if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
+                ResponsiveRowColumnItem(
                     rowFlex: 1,
-                    child: TextFormFieldServerName(controller: _txtServerController),
+                    child: DropDownButtonFieldCategory(value: _votingCategory, onChanged: _onCategoryChange)),
+              ],
+            ),
+            const HeightSpacer(),
+            Wrap(
+              spacing: spacing(2),
+              children: [
+                Tooltip(
+                  message: localizations.newSessionHint,
+                  child: ElevatedButton(
+                    onPressed: isFormValid ? sessionCreation : null,
+                    child: Text(localizations.newSession.toUpperCase()),
                   ),
-                  if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
-                  ResponsiveRowColumnItem(rowFlex: 1, child: TextFormFieldTeamName(controller: _txtTeamNameController)),
-                ],
-              ),
-              ResponsiveRowColumn(
-                layout: isColumnLayout ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
-                children: [
-                  ResponsiveRowColumnItem(
-                    rowFlex: 1,
-                    child: TextFormFieldUsername(controller: _txtUsernameController),
+                ),
+                Tooltip(
+                  message: localizations.joinHint,
+                  child: ElevatedButton(
+                    onPressed: sessionJoin,
+                    child: Text(localizations.join.toUpperCase()),
                   ),
-                  if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
-                  ResponsiveRowColumnItem(
-                      rowFlex: 1,
-                      child: DropDownButtonFieldCategory(value: _votingCategory, onChanged: _onCategoryChange)),
-                ],
-              ),
-              const HeightSpacer(),
-              Wrap(
-                spacing: spacing(2),
-                children: [
-                  Tooltip(
-                    message: localizations.newSessionHint,
-                    child: ElevatedButton(
-                      child: Text(localizations.newSession.toUpperCase()),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          sessionCreation();
-                        }
-                      },
-                    ),
+                ),
+                Tooltip(
+                  message: localizations.shareHint,
+                  child: ElevatedButton(
+                    onPressed: sessionSharing,
+                    child: Text(localizations.share.toUpperCase()),
                   ),
-                  Tooltip(
-                    message: localizations.joinHint,
-                    child: ElevatedButton(
-                      child: Text(localizations.join.toUpperCase()),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          sessionJoin();
-                        }
-                      },
-                    ),
-                  ),
-                  Tooltip(
-                    message: localizations.shareHint,
-                    child: ElevatedButton(
-                      child: Text(localizations.share.toUpperCase()),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          sessionSharing();
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
+                ),
+              ],
+            )
+          ],
         ),
-      );
-    });
+      ),
+    );
   }
 }
 
