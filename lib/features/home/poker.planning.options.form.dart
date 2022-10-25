@@ -80,7 +80,7 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
 
   void sessionJoin() {
     if (_formKey.currentState!.validate()) {
-      print('join session');
+      store.join();
     }
   }
 

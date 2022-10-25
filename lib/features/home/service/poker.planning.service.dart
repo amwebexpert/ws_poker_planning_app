@@ -39,4 +39,9 @@ class PokerPlanningService {
     String jsonData = '{"type":"vote","payload":{"username":"Andre-Flutter-Guy"}}';
     webSocketService.sendData(jsonData);
   }
+
+  void estimate(String? value) {
+    String jsonData = '{"type":"vote","payload":{"username":"Andre-Flutter-$value"}}';
+    webSocketService.sendData(jsonData);
+  }
 }
