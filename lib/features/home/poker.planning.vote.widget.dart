@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ws_poker_planning_app/features/home/poker.planning.room.store.dart';
+import 'package:ws_poker_planning_app/service.locator.dart';
 import 'package:ws_poker_planning_app/theme/theme.utils.dart';
 
 class VoteWidget extends StatelessWidget {
@@ -8,7 +10,7 @@ class VoteWidget extends StatelessWidget {
   const VoteWidget({super.key, required this.value, required this.isSelected});
 
   void onPressed() {
-    debugPrint('Received click $value');
+    serviceLocator.get<PokerPlanningRoomStore>().estimateTask(value);
   }
 
   @override

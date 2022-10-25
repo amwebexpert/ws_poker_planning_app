@@ -19,13 +19,20 @@ abstract class _PokerPlanningRoomStoreBase with Store {
   final SharedPreferencesService _preferences = serviceLocator.get();
 
   @observable
+  String? estimate = '1';
+
+  @observable
   PokerPlanningSessionInfo pokerPlanningSessionInfo = PokerPlanningSessionInfo();
 
   _PokerPlanningRoomStoreBase() {
     final defaultValue = jsonEncode(PokerPlanningSessionInfo().toJson());
-    final jsonStoredValue =
-        _preferences.getString(SharedPreferenceKey.lastPokerPlanningRoom.name, defaultValue: defaultValue);
-    pokerPlanningSessionInfo = PokerPlanningSessionInfo.fromJson(jsonDecode(jsonStoredValue));
+    final json = _preferences.getString(SharedPreferenceKey.lastPokerPlanningRoom.name, defaultValue: defaultValue);
+    pokerPlanningSessionInfo = PokerPlanningSessionInfo.fromJson(jsonDecode(json));
+  }
+
+  @action
+  void estimateTask(String? newEstimate) {
+    estimate = newEstimate;
   }
 
   @action
