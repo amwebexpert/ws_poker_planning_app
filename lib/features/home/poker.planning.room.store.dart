@@ -22,7 +22,7 @@ abstract class _PokerPlanningRoomStoreBase with Store {
   final PokerPlanningService pokerService = serviceLocator.get();
 
   @observable
-  String? estimate = '1';
+  String? estimate;
 
   @observable
   PokerPlanningSessionInfo pokerPlanningSessionInfo = PokerPlanningSessionInfo();
@@ -41,12 +41,6 @@ abstract class _PokerPlanningRoomStoreBase with Store {
       pokerPlanningSessionInfo.isPopulated && session != null && session!.hasMember(pokerPlanningSessionInfo.username);
 
   @action
-  void estimateTask(String? newEstimate) {
-    estimate = newEstimate;
-    pokerService.estimate(pokerPlanningSessionInfo.username, newEstimate);
-  }
-
-  @action
   void join() {
     pokerService.startSession(
         hostname: pokerPlanningSessionInfo.hostname,
@@ -56,7 +50,18 @@ abstract class _PokerPlanningRoomStoreBase with Store {
     pokerService.stream.listen((updatedSessionInfo) {
       _logger.info('[PokerPlanningRoomStore] receiving: ${updatedSessionInfo.toJson()}');
       session = updatedSessionInfo;
+
+      if (!isMemberOfRoom && pokerPlanningSessionInfo.isPopulated) {
+        // entering the room for the very 1st time
+        estimateTask(null);
+      }
     });
+  }
+
+  @action
+  void estimateTask(String? newEstimate) {
+    estimate = newEstimate;
+    pokerService.estimate(pokerPlanningSessionInfo.username, newEstimate);
   }
 
   @action
