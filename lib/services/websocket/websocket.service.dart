@@ -17,7 +17,7 @@ class WebSocketService {
       return;
     }
 
-    logger.info('Opening connection to $uri...');
+    logger.info('[WebSocketService] opening connection to $uri...');
     _uri = uri;
     _channel = WebSocketChannel.connect(uri);
     _channel?.stream.listen(onData, cancelOnError: true, onDone: onDone, onError: onError);
@@ -33,13 +33,13 @@ class WebSocketService {
   void sendData(dynamic data) => _channel?.sink.add(data);
 
   void onData(dynamic data) {
-    logger.info('onData: $data');
+    logger.info('[WebSocketService] onData: $data');
     streamController.sink.add(data);
   }
 
   void onDone() {
     final detail = ' ${_channel?.closeCode ?? ''} ${_channel?.closeReason ?? ''}'.trim();
-    logger.info('onDone with code: $detail. Reopening connection...');
+    logger.info('[WebSocketService] onDone with code: $detail. Reopening connection...');
     _channel = null;
     if (shouldReconnectOnClose) {
       openConnection(_uri!);

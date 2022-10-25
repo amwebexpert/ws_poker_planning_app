@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ws_poker_planning_app/features/home/poker.planning.options.form.dart';
-import 'package:ws_poker_planning_app/features/home/poker.planning.vote.panel.widget.dart';
+import 'package:ws_poker_planning_app/features/home/poker.planning.votes.widget.dart';
 import 'package:ws_poker_planning_app/features/home/service/poker.planning.service.dart';
 import 'package:ws_poker_planning_app/service.locator.dart';
 import 'package:ws_poker_planning_app/services/logger/logger.service.dart';
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
         drawer: const Drawer(child: AppMenu()),
         body: SingleChildScrollView(
             child: Column(
-          children: const [PokerOptionsFormWidget(), VotePanelWidget()],
+          children: [const PokerOptionsFormWidget(), VotesWidget()],
         )));
   }
 }

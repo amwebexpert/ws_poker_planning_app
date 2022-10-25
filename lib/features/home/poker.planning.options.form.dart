@@ -116,24 +116,24 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
               layout: isColumnLayout ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
               children: [
                 ResponsiveRowColumnItem(
+                    rowFlex: 1,
+                    child: DropDownButtonFieldCategory(value: _votingCategory, onChanged: _onCategoryChange)),
+                if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
+                ResponsiveRowColumnItem(
                   rowFlex: 1,
                   child: TextFormFieldServerName(controller: _txtHostnameController),
                 ),
-                if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
-                ResponsiveRowColumnItem(rowFlex: 1, child: TextFormFieldTeamName(controller: _txtTeamNameController)),
               ],
             ),
             ResponsiveRowColumn(
               layout: isColumnLayout ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
               children: [
+                ResponsiveRowColumnItem(rowFlex: 1, child: TextFormFieldTeamName(controller: _txtTeamNameController)),
+                if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
                 ResponsiveRowColumnItem(
                   rowFlex: 1,
                   child: TextFormFieldUsername(controller: _txtUsernameController),
                 ),
-                if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
-                ResponsiveRowColumnItem(
-                    rowFlex: 1,
-                    child: DropDownButtonFieldCategory(value: _votingCategory, onChanged: _onCategoryChange)),
               ],
             ),
             const HeightSpacer(),
