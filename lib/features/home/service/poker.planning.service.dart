@@ -19,7 +19,7 @@ class PokerPlanningService {
       required String roomUUID,
       required bool isSecure,
       required Function() onConnectionSuccess}) {
-    Uri uri = buildWebSocketURI(hostname, roomUUID, isSecure);
+    final Uri uri = buildWebSocketURI(hostname, roomUUID, isSecure);
 
     if (_webSocketService.openConnection(uri)) {
       onConnectionSuccess();
@@ -27,8 +27,8 @@ class PokerPlanningService {
     }
 
     _webSocketService.streamController.stream.listen((data) {
-      Map<String, dynamic> dataMap = jsonDecode(data);
-      PokerPlanningSession session = PokerPlanningSession.fromJson(dataMap);
+      final Map<String, dynamic> dataMap = jsonDecode(data);
+      final PokerPlanningSession session = PokerPlanningSession.fromJson(dataMap);
       _streamController.sink.add(session);
     });
   }
@@ -53,7 +53,13 @@ class PokerPlanningService {
         UserEstimate(username: username, estimate: estimate, estimatedAtISO8601: estimatedAtISO8601);
     final UserMessage<UserEstimate> userMessage = UserMessage(type: MessageType.vote, payload: userEstimate);
 
-    String jsonData = jsonEncode(userMessage.toJson());
+    final String jsonData = jsonEncode(userMessage.toJson());
+    _webSocketService.sendData(jsonData);
+  }
+
+  void remove(String username) {
+    final Map<String, dynamic> userMessage = {'type': MessageType.remove.name, 'payload': username};
+    final String jsonData = jsonEncode(userMessage);
     _webSocketService.sendData(jsonData);
   }
 }

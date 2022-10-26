@@ -4,6 +4,7 @@ import 'package:ws_poker_planning_app/features/home/poker.planning.options.form.
 import 'package:ws_poker_planning_app/features/home/poker.planning.session.table.widget.dart';
 import 'package:ws_poker_planning_app/features/home/poker.planning.votes.widget.dart';
 import 'package:ws_poker_planning_app/theme/app.menu.widget.dart';
+import 'package:ws_poker_planning_app/theme/height.spacer.widget.dart';
 import 'package:ws_poker_planning_app/theme/theme.utils.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -19,7 +20,12 @@ class HomeScreen extends StatelessWidget {
         body: SingleChildScrollView(
             padding: EdgeInsets.all(spacing(2)),
             child: Column(
-              children: [const PokerOptionsFormWidget(), VotesWidget(), const PokerPlanningSessionTable()],
+              children: [
+                const PokerOptionsFormWidget(),
+                VotesWidget(),
+                const HeightSpacer(),
+                const PokerPlanningSessionTable()
+              ],
             )));
   }
 }
