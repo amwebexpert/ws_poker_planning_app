@@ -152,7 +152,7 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
                   message: localizations.shareHint,
                   child: ElevatedButton(
                     onPressed: isFormPopulated ? sessionSharing : null,
-                    child: Text(localizations.share.toUpperCase()),
+                    child: const Icon(Icons.share),
                   ),
                 ),
               ],
