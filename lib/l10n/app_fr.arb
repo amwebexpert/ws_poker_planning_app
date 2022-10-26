@@ -3,6 +3,7 @@
   "aboutMadeWithLove": "Fait avec amour via le framework Flutter ! Appuyez sur le logo de Flutter pour voir les lisences des librairies utilisées par l'application",
   "actionCancel": "Annuler",
   "actionClose": "Fermer",
+  "dialogTitleConfirm": "Confirmation",
   "actionOK": "OK",
   "appAuthorName": "Auteur",
   "appAuthorProfile": "Profile",
@@ -43,5 +44,6 @@
   "removeUser": "Supprimer cet utilisateur de la session de poker planning",
   "toggleStoryPointsVisibility": "Montrer ou cacher les points",
   "clearAllVotes": "Supprimer tous les votes",
+  "clearAllVotesQuestion": "Supprimer tous les votes ?",
   "pickEstimate": "Estimer l'effort de la `story`"
 }

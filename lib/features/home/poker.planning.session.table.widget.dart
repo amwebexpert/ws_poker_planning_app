@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:ws_poker_planning_app/features/home/poker.planning.room.store.dart';
 import 'package:ws_poker_planning_app/service.locator.dart';
+import 'package:ws_poker_planning_app/theme/dialogs/confirm.dialog.widget.dart';
 import 'package:ws_poker_planning_app/theme/theme.utils.dart';
 import 'package:ws_poker_planning_app/theme/width.spacer.widget.dart';
 
@@ -14,12 +15,23 @@ class PokerPlanningSessionTable extends StatefulWidget {
 }
 
 class _PokerPlanningSessionTableState extends State<PokerPlanningSessionTable> {
-  bool _isEstimatesVisible = false;
+  final PokerPlanningRoomStore store = serviceLocator.get();
+  bool _isVisible = false;
+
+  void _toggleVisibility() => setState(() => _isVisible = !_isVisible);
+
+  void _clearAllVotes() {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
+    showConfirmDialog(
+        context: context,
+        title: localizations.dialogTitleConfirm,
+        body: localizations.clearAllVotesQuestion,
+        onConfirm: () => store.reset());
+  }
 
   @override
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
-    final PokerPlanningRoomStore store = serviceLocator.get();
 
     return Observer(builder: (context) {
       final estimates = store.session?.estimates;
@@ -37,10 +49,7 @@ class _PokerPlanningSessionTableState extends State<PokerPlanningSessionTable> {
                         children: [
                           Tooltip(
                             message: localizations.clearAllVotes,
-                            child: ElevatedButton(
-                              onPressed: () => store.reset(),
-                              child: const Icon(Icons.delete),
-                            ),
+                            child: ElevatedButton(onPressed: _clearAllVotes, child: const Icon(Icons.delete)),
                           ),
                           const WidthSpacer(
                             spacingUnitCount: 2,
@@ -48,8 +57,8 @@ class _PokerPlanningSessionTableState extends State<PokerPlanningSessionTable> {
                           Tooltip(
                             message: localizations.toggleStoryPointsVisibility,
                             child: ElevatedButton(
-                              onPressed: () => setState(() => _isEstimatesVisible = !_isEstimatesVisible),
-                              child: Icon(_isEstimatesVisible ? Icons.visibility : Icons.visibility_off),
+                              onPressed: _toggleVisibility,
+                              child: Icon(_isVisible ? Icons.visibility : Icons.visibility_off),
                             ),
                           ),
                         ],
@@ -79,7 +88,7 @@ class _PokerPlanningSessionTableState extends State<PokerPlanningSessionTable> {
                             return DataRow(
                               cells: <DataCell>[
                                 DataCell(Text(e.username)),
-                                DataCell(Text(_isEstimatesVisible ? valueWhenVisible : valueWhenHidden)),
+                                DataCell(Text(_isVisible ? valueWhenVisible : valueWhenHidden)),
                                 DataCell(
                                   ConstrainedBox(
                                     constraints: BoxConstraints(maxWidth: spacing(4)),

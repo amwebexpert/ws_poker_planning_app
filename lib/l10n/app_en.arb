@@ -3,6 +3,7 @@
   "aboutMadeWithLove": "Make with love with Flutter framework! Press the Flutter logo to access app libraries licences",
   "actionCancel": "Cancel",
   "actionClose": "Close",
+  "dialogTitleConfirm": "Confirmation",
   "actionOK": "OK",
   "appAuthorName": "Author",
   "appAuthorProfile": "Profile",
@@ -43,5 +44,6 @@
   "removeUser": "Remove this user from the room",
   "toggleStoryPointsVisibility": "Toggle story points visibility",
   "clearAllVotes": "Clear all votes",
+  "clearAllVotesQuestion": "Are you sure you want to delete all votes?",
   "pickEstimate": "Estimate the current story points"
 }
