@@ -104,65 +104,61 @@ class _PokerOptionsFormWidgetState extends State<PokerOptionsFormWidget> {
 
     return Form(
       key: _formKey,
-      child: SingleChildScrollView(
-        padding: EdgeInsets.all(spacing(2)),
-        child: Column(
-          children: [
-            ResponsiveRowColumn(
-              layout: isColumnLayout ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
+      child: Column(
+        children: [
+          ResponsiveRowColumn(
+            layout: isColumnLayout ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
+            children: [
+              ResponsiveRowColumnItem(
+                  rowFlex: 1, child: DropDownButtonFieldCategory(value: _votingCategory, onChanged: _onCategoryChange)),
+              if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
+              ResponsiveRowColumnItem(
+                rowFlex: 1,
+                child: TextFormFieldServerName(controller: _txtHostnameController),
+              ),
+            ],
+          ),
+          ResponsiveRowColumn(
+            layout: isColumnLayout ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
+            children: [
+              ResponsiveRowColumnItem(rowFlex: 1, child: TextFormFieldTeamName(controller: _txtTeamNameController)),
+              if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
+              ResponsiveRowColumnItem(
+                rowFlex: 1,
+                child: TextFormFieldUsername(controller: _txtUsernameController),
+              ),
+            ],
+          ),
+          const HeightSpacer(),
+          Observer(builder: (context) {
+            return Wrap(
+              spacing: spacing(2),
               children: [
-                ResponsiveRowColumnItem(
-                    rowFlex: 1,
-                    child: DropDownButtonFieldCategory(value: _votingCategory, onChanged: _onCategoryChange)),
-                if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
-                ResponsiveRowColumnItem(
-                  rowFlex: 1,
-                  child: TextFormFieldServerName(controller: _txtHostnameController),
+                Tooltip(
+                  message: localizations.newSessionHint,
+                  child: ElevatedButton(
+                    onPressed: isFormPopulated ? sessionCreation : null,
+                    child: Text(localizations.newSession.toUpperCase()),
+                  ),
+                ),
+                Tooltip(
+                  message: localizations.joinHint,
+                  child: ElevatedButton(
+                    onPressed: isFormPopulated && !store.isMemberOfRoom ? sessionJoin : null,
+                    child: Text(localizations.join.toUpperCase()),
+                  ),
+                ),
+                Tooltip(
+                  message: localizations.shareHint,
+                  child: ElevatedButton(
+                    onPressed: isFormPopulated ? sessionSharing : null,
+                    child: Text(localizations.share.toUpperCase()),
+                  ),
                 ),
               ],
-            ),
-            ResponsiveRowColumn(
-              layout: isColumnLayout ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
-              children: [
-                ResponsiveRowColumnItem(rowFlex: 1, child: TextFormFieldTeamName(controller: _txtTeamNameController)),
-                if (!isColumnLayout) const ResponsiveRowColumnItem(child: WidthSpacer()),
-                ResponsiveRowColumnItem(
-                  rowFlex: 1,
-                  child: TextFormFieldUsername(controller: _txtUsernameController),
-                ),
-              ],
-            ),
-            const HeightSpacer(),
-            Observer(builder: (context) {
-              return Wrap(
-                spacing: spacing(2),
-                children: [
-                  Tooltip(
-                    message: localizations.newSessionHint,
-                    child: ElevatedButton(
-                      onPressed: isFormPopulated ? sessionCreation : null,
-                      child: Text(localizations.newSession.toUpperCase()),
-                    ),
-                  ),
-                  Tooltip(
-                    message: localizations.joinHint,
-                    child: ElevatedButton(
-                      onPressed: isFormPopulated && !store.isMemberOfRoom ? sessionJoin : null,
-                      child: Text(localizations.join.toUpperCase()),
-                    ),
-                  ),
-                  Tooltip(
-                    message: localizations.shareHint,
-                    child: ElevatedButton(
-                      onPressed: isFormPopulated ? sessionSharing : null,
-                      child: Text(localizations.share.toUpperCase()),
-                    ),
-                  ),
-                ],
-              );
-            })
-          ],
-        ),
+            );
+          })
+        ],
       ),
     );
   }
