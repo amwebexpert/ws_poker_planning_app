@@ -32,6 +32,8 @@ class UserEstimate extends SerializableAsJson {
   String? estimate;
   String? estimatedAtISO8601;
 
+  bool get hasEstimate => estimate != null;
+
   UserEstimate.fromJson(Map<String, dynamic> json)
       : username = json['username'],
         estimate = json['estimate'],
