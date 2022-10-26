@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void showConfirmDialog(
     {required BuildContext context,
-    required String title,
+    String? title,
     required String body,
     VoidCallback? onCancel,
     required VoidCallback onConfirm}) {
@@ -13,8 +13,8 @@ void showConfirmDialog(
       context: context,
       builder: (BuildContext ctx) {
         return AlertDialog(
-          title: Text(title),
-          content: Text(body),
+          title: Text(title ?? localizations.dialogTitleConfirm),
+          content: Text(body, style: Theme.of(context).textTheme.bodyText1),
           actions: [
             TextButton(
                 onPressed: () {

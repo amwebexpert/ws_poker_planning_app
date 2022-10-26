@@ -2,6 +2,14 @@ const withDia = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèé�
 const withoutDia = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
 
 extension StringUtils on String? {
+  bool get isNumeric {
+    if (isBlank) {
+      return false;
+    }
+
+    return num.tryParse(this!) != null ? true : false;
+  }
+
   String? removeDiacritics() {
     if (this == null) {
       return null;

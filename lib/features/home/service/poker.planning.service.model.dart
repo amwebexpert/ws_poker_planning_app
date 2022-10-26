@@ -1,3 +1,5 @@
+import 'package:ws_poker_planning_app/utils/extensions/string.extensions.dart';
+
 class PokerPlanningSession {
   PokerPlanningSession({
     required this.version,
@@ -25,6 +27,14 @@ class PokerPlanningSession {
       };
 
   bool get hasAtLeastOneVote => estimates.any((element) => element.estimate != null);
+  List<double> get estimateValues => estimates
+      .map((e) => e.estimate)
+      .where((element) => element.isNotBlank)
+      .where((element) => element.isNumeric)
+      .map((e) => num.parse(e!).toDouble())
+      .toList();
+  double get estimatesSum => estimateValues.fold(0, (acc, item) => acc += item);
+  double get estimatesAverage => estimateValues.isEmpty ? 0 : estimatesSum / estimateValues.length;
 }
 
 class UserEstimate extends SerializableAsJson {
@@ -35,6 +45,7 @@ class UserEstimate extends SerializableAsJson {
   String? estimatedAtISO8601;
 
   bool get hasEstimate => estimate != null;
+  double get estimateAsDouble => estimate == null ? 0 : num.parse(estimate!).toDouble();
 
   UserEstimate.fromJson(Map<String, dynamic> json)
       : username = json['username'],

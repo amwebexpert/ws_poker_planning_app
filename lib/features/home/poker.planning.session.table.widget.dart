@@ -22,11 +22,7 @@ class _PokerPlanningSessionTableState extends State<PokerPlanningSessionTable> {
 
   void _clearAllVotes() {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
-    showConfirmDialog(
-        context: context,
-        title: localizations.dialogTitleConfirm,
-        body: localizations.clearAllVotesQuestion,
-        onConfirm: () => store.reset());
+    showConfirmDialog(context: context, body: localizations.clearAllVotesQuestion, onConfirm: () => store.reset());
   }
 
   @override
@@ -34,8 +30,10 @@ class _PokerPlanningSessionTableState extends State<PokerPlanningSessionTable> {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
 
     return Observer(builder: (context) {
-      final estimates = store.session?.estimates;
-      final hasAtLeastOneVote = store.session?.hasAtLeastOneVote ?? false;
+      final session = store.session;
+      final estimates = session?.estimates ?? [];
+      final hasAtLeastOneVote = session?.hasAtLeastOneVote ?? false;
+      final estimatesAverage = (session?.estimatesAverage ?? 0).toStringAsFixed(1);
 
       return store.isSessionStarted
           ? Card(
@@ -69,11 +67,7 @@ class _PokerPlanningSessionTableState extends State<PokerPlanningSessionTable> {
                         horizontalMargin: 0,
                         columnSpacing: spacing(1),
                         columns: [
-                          DataColumn(
-                              label: Text(
-                            localizations.teamMember,
-                            overflow: TextOverflow.ellipsis,
-                          )),
+                          DataColumn(label: Text(localizations.teamMember, overflow: TextOverflow.ellipsis)),
                           DataColumn(
                               label: Text(
                                 localizations.points,
@@ -83,7 +77,7 @@ class _PokerPlanningSessionTableState extends State<PokerPlanningSessionTable> {
                           DataColumn(label: Container(), numeric: true),
                         ],
                         rows: <DataRow>[
-                          ...estimates!.map((e) {
+                          ...estimates.map((e) {
                             final valueWhenVisible = e.estimate ?? '…';
                             final valueWhenHidden = e.hasEstimate ? '✔' : '…';
 
@@ -107,11 +101,8 @@ class _PokerPlanningSessionTableState extends State<PokerPlanningSessionTable> {
                           }).toList(),
                           DataRow(
                             cells: <DataCell>[
-                              DataCell(Text(
-                                localizations.storyPointsAverage,
-                                overflow: TextOverflow.ellipsis,
-                              )),
-                              const DataCell(Text('15')),
+                              DataCell(Text(localizations.storyPointsAverage, overflow: TextOverflow.ellipsis)),
+                              DataCell(Text(_isVisible ? estimatesAverage : '')),
                               DataCell(Container()),
                             ],
                           ),
