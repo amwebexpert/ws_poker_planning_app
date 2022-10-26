@@ -36,9 +36,9 @@ class _PokerPlanningSessionTableState extends State<PokerPlanningSessionTable> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Tooltip(
-                            message: localizations.newSessionHint,
+                            message: localizations.clearAllVotes,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () => store.reset(),
                               child: const Icon(Icons.delete),
                             ),
                           ),
@@ -46,7 +46,7 @@ class _PokerPlanningSessionTableState extends State<PokerPlanningSessionTable> {
                             spacingUnitCount: 2,
                           ),
                           Tooltip(
-                            message: localizations.joinHint,
+                            message: localizations.toggleStoryPointsVisibility,
                             child: ElevatedButton(
                               onPressed: () => setState(() => _isEstimatesVisible = !_isEstimatesVisible),
                               child: Icon(_isEstimatesVisible ? Icons.visibility : Icons.visibility_off),

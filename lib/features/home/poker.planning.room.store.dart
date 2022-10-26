@@ -73,6 +73,9 @@ abstract class _PokerPlanningRoomStoreBase with Store {
   void remove(String username) => pokerService.remove(username);
 
   @action
+  void reset() => pokerService.reset();
+
+  @action
   void estimateTask(String? newEstimate) {
     estimate = newEstimate;
     pokerService.estimate(pokerPlanningSessionInfo.username, newEstimate);

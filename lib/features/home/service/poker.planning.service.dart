@@ -58,8 +58,12 @@ class PokerPlanningService {
   }
 
   void remove(String username) {
-    final Map<String, dynamic> userMessage = {'type': MessageType.remove.name, 'payload': username};
-    final String jsonData = jsonEncode(userMessage);
+    final String jsonData = jsonEncode({'type': MessageType.remove.name, 'payload': username});
+    _webSocketService.sendData(jsonData);
+  }
+
+  void reset() {
+    final String jsonData = jsonEncode({'type': MessageType.reset.name});
     _webSocketService.sendData(jsonData);
   }
 }
