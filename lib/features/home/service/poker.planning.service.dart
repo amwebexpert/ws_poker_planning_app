@@ -3,21 +3,30 @@ import 'dart:convert';
 
 import 'package:ws_poker_planning_app/features/home/service/poker.planning.service.model.dart';
 import 'package:ws_poker_planning_app/service.locator.dart';
-import 'package:ws_poker_planning_app/services/logger/logger.service.dart';
 import 'package:ws_poker_planning_app/services/websocket/websocket.service.dart';
 
 class PokerPlanningService {
-  final LoggerService logger = serviceLocator.get();
-  final WebSocketService webSocketService = serviceLocator.get();
+  final WebSocketService _webSocketService = serviceLocator.get();
   final StreamController<PokerPlanningSession> _streamController = StreamController<PokerPlanningSession>();
 
+  bool _isConnected = false;
+
+  bool get isSessionStarted => _isConnected;
   Stream<PokerPlanningSession> get stream => _streamController.stream;
 
-  void startSession({required String hostname, required String roomUUID, required bool isSecure}) {
+  void startSession(
+      {required String hostname,
+      required String roomUUID,
+      required bool isSecure,
+      required Function() onConnectionSuccess}) {
     Uri uri = buildWebSocketURI(hostname, roomUUID, isSecure);
 
-    webSocketService.openConnection(uri);
-    webSocketService.streamController.stream.listen((data) {
+    if (_webSocketService.openConnection(uri)) {
+      onConnectionSuccess();
+      _isConnected = true;
+    }
+
+    _webSocketService.streamController.stream.listen((data) {
       Map<String, dynamic> dataMap = jsonDecode(data);
       PokerPlanningSession session = PokerPlanningSession.fromJson(dataMap);
       _streamController.sink.add(session);
@@ -25,8 +34,9 @@ class PokerPlanningService {
   }
 
   void stopSession() {
-    webSocketService.closeConnection();
+    _webSocketService.closeConnection();
     _streamController.sink.close();
+    _isConnected = false;
   }
 
   Uri buildWebSocketURI(String hostname, String roomUUID, bool isSecure) {
@@ -36,9 +46,14 @@ class PokerPlanningService {
   }
 
   void estimate(String username, String? estimate) {
-    final UserEstimate userEstimate = UserEstimate(username: username, estimate: estimate, estimatedAtISO8601: '');
+    final bool hasEstimate = estimate != null;
+    final estimatedAtISO8601 = hasEstimate ? DateTime.now().toIso8601String() : null;
+
+    final UserEstimate userEstimate =
+        UserEstimate(username: username, estimate: estimate, estimatedAtISO8601: estimatedAtISO8601);
     final UserMessage<UserEstimate> userMessage = UserMessage(type: MessageType.vote, payload: userEstimate);
+
     String jsonData = jsonEncode(userMessage.toJson());
-    webSocketService.sendData(jsonData);
+    _webSocketService.sendData(jsonData);
   }
 }

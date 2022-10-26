@@ -40,22 +40,33 @@ abstract class _PokerPlanningRoomStoreBase with Store {
   bool get isMemberOfRoom =>
       pokerPlanningSessionInfo.isPopulated && session != null && session!.hasMember(pokerPlanningSessionInfo.username);
 
+  bool get isSessionStarted => pokerService.isSessionStarted;
+
   @action
   void join() {
+    if (!pokerPlanningSessionInfo.isPopulated) {
+      return;
+    }
+
     pokerService.startSession(
         hostname: pokerPlanningSessionInfo.hostname,
         roomUUID: pokerPlanningSessionInfo.roomUUID,
-        isSecure: pokerPlanningSessionInfo.isSecure);
+        isSecure: pokerPlanningSessionInfo.isSecure,
+        onConnectionSuccess: onConnectionSuccess);
 
     pokerService.stream.listen((updatedSessionInfo) {
       _logger.info('[PokerPlanningRoomStore] receiving: ${updatedSessionInfo.toJson()}');
       session = updatedSessionInfo;
-
-      if (!isMemberOfRoom && pokerPlanningSessionInfo.isPopulated) {
-        // entering the room for the very 1st time
-        estimateTask(null);
+      if (!isMemberOfRoom) {
+        estimate = null;
       }
     });
+  }
+
+  void onConnectionSuccess() {
+    if (!isMemberOfRoom && pokerPlanningSessionInfo.isPopulated) {
+      estimateTask(null); // entering the room for the very 1st time
+    }
   }
 
   @action

@@ -12,15 +12,16 @@ class WebSocketService {
   bool shouldReconnectOnClose = true;
   WebSocketChannel? _channel;
 
-  void openConnection(Uri uri) {
+  bool openConnection(Uri uri) {
     if (_channel != null) {
-      return;
+      return true;
     }
 
     logger.info('[WebSocketService] opening connection to $uri...');
     _uri = uri;
     _channel = WebSocketChannel.connect(uri);
     _channel?.stream.listen(onData, cancelOnError: true, onDone: onDone, onError: onError);
+    return _channel?.stream != null;
   }
 
   void closeConnection() {
