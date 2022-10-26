@@ -23,6 +23,8 @@ class PokerPlanningSession {
         'lastUpdateISO8601': lastUpdateISO8601,
         'estimates': estimates.map((UserEstimate e) => e.toJson()).toList(),
       };
+
+  bool get hasAtLeastOneVote => estimates.any((element) => element.estimate != null);
 }
 
 class UserEstimate extends SerializableAsJson {

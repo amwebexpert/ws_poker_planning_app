@@ -11,7 +11,12 @@ class VoteWidget extends StatelessWidget {
   const VoteWidget({super.key, required this.value, required this.isSelected, required this.isEnabled});
 
   void onPressed() {
-    serviceLocator.get<PokerPlanningRoomStore>().estimateTask(value);
+    final PokerPlanningRoomStore store = serviceLocator.get();
+    if (store.estimate == value) {
+      store.estimateTask(null); // user is removing his/her current vote
+    } else {
+      store.estimateTask(value);
+    }
   }
 
   @override

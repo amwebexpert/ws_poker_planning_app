@@ -35,6 +35,7 @@ class _PokerPlanningSessionTableState extends State<PokerPlanningSessionTable> {
 
     return Observer(builder: (context) {
       final estimates = store.session?.estimates;
+      final hasAtLeastOneVote = store.session?.hasAtLeastOneVote ?? false;
 
       return store.isSessionStarted
           ? Card(
@@ -49,7 +50,8 @@ class _PokerPlanningSessionTableState extends State<PokerPlanningSessionTable> {
                         children: [
                           Tooltip(
                             message: localizations.clearAllVotes,
-                            child: ElevatedButton(onPressed: _clearAllVotes, child: const Icon(Icons.delete)),
+                            child: ElevatedButton(
+                                onPressed: hasAtLeastOneVote ? _clearAllVotes : null, child: const Icon(Icons.delete)),
                           ),
                           const WidthSpacer(
                             spacingUnitCount: 2,
@@ -57,7 +59,7 @@ class _PokerPlanningSessionTableState extends State<PokerPlanningSessionTable> {
                           Tooltip(
                             message: localizations.toggleStoryPointsVisibility,
                             child: ElevatedButton(
-                              onPressed: _toggleVisibility,
+                              onPressed: hasAtLeastOneVote ? _toggleVisibility : null,
                               child: Icon(_isVisible ? Icons.visibility : Icons.visibility_off),
                             ),
                           ),
