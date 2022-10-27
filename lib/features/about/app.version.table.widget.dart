@@ -58,7 +58,8 @@ class _AppVersionTableState extends State<AppVersionTable> {
                 DataCell(Text(localizations.githubProject)),
                 const DataCell(
                   ThemedTextLink(
-                      displayText: 'Open Source project', hyperlink: 'https://github.com/amwebexpert/guess_the_text'),
+                      displayText: 'Open Source project',
+                      hyperlink: 'https://github.com/amwebexpert/ws_poker_planning_app'),
                 ),
               ],
             ),

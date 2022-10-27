@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ws_poker_planning_app/theme/text.link.widget.dart';
 
-
 class PrivacyPolicyWidget extends StatelessWidget {
   const PrivacyPolicyWidget({Key? key}) : super(key: key);
 
@@ -12,6 +11,6 @@ class PrivacyPolicyWidget extends StatelessWidget {
 
     return ThemedTextLink(
         displayText: localizations.privacyPolicy,
-        hyperlink: 'https://amw-hangman-api.herokuapp.com/privacy-policy.html'); // TODO dot env config
+        hyperlink: 'https://amwebexpert.github.io/etoolbox/privacy-policy.html'); // TODO dot env config
   }
 }
