@@ -2,7 +2,7 @@
 
 PokerPlanning client native app for the [WsPokerPlanning backend](https://github.com/amwebexpert/ws-poker-planning)
 
-[![made-with-Markdown](https://img.shields.io/badge/Made%20with-Flutter-1389FD.svg)](http://flutter.dev) [![Flutter Responsive](https://img.shields.io/badge/flutter-responsive-brightgreen.svg?style=flat-square)](https://github.com/Codelessly/ResponsiveFramework) ![GitHub last commit](https://img.shields.io/github/last-commit/amwebexpert/guess_the_text) ![GitHub](https://img.shields.io/github/license/amwebexpert/guess_the_text)
+[![made-with-Markdown](https://img.shields.io/badge/Made%20with-Flutter-1389FD.svg)](http://flutter.dev) [![Flutter Responsive](https://img.shields.io/badge/flutter-responsive-brightgreen.svg?style=flat-square)](https://github.com/Codelessly/ResponsiveFramework) ![GitHub last commit](https://img.shields.io/github/last-commit/amwebexpert/ws_poker_planning_app) ![GitHub](https://img.shields.io/github/license/amwebexpert/ws_poker_planning_app)
 
 ## Usefull project commands
 
@@ -21,6 +21,7 @@ The app has been associated with the [amwebexpert.users.sourceforge.net](https:/
 
 - [App about page](https://amwebexpert.users.sourceforge.net/deep_link_poker_planning_app/about)
 - [App settings page](https://amwebexpert.users.sourceforge.net/deep_link_poker_planning_app/settings)
+- [Classic links html page here](https://amwebexpert.github.io/ws_poker_planning_app/index.html)
 
 Testing on command line:
 
