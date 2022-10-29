@@ -197,7 +197,6 @@ class TextFormFieldServerName extends StatelessWidget {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
 
     return TextFormField(
-      autofocus: controller.text.isBlank,
       enableSuggestions: false,
       autocorrect: false,
       controller: controller,

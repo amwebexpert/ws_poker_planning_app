@@ -21,6 +21,15 @@ Route? onGenerateRoute(RouteSettings settings) {
     case '/settings':
       return MaterialPageRoute(builder: (_) => SettingsScreen());
 
+    case '/deep_link_poker_planning_app':
+      return null;
+
+    case '/deep_link_poker_planning_app/about':
+      return MaterialPageRoute(builder: (_) => const AboutScreen());
+
+    case '/deep_link_poker_planning_app/settings':
+      return MaterialPageRoute(builder: (_) => SettingsScreen());
+
     default:
       logger.error('Invalid navigation: ${settings.name}');
       return MaterialPageRoute(builder: (_) => const HomeScreen());
